@@ -1,54 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eBike Shop</title>
-    <link rel="stylesheet" href="the.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>eBike Shop</title>
+  <link rel="stylesheet" href="the.css" />
 </head>
 <body>
-    <header>
-        <h1>eBike Shop</h1>
-        <nav>
-            <ul>
-                <li><a href="#shop">Shop</a></li>
-                <li><a href="#cart">Cart</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <h1>eBike Shop</h1>
+    <nav>
+      <a href="index.html">Shop</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
 
-    <main>
-        <section id="shop">
-  <h2>Shop eBikes</h2>
-  <div class="products">
-    <!-- Sur Ron -->
-    <div class="product-card">
-      <img src="https://s.alicdn.com/@sc04/kf/Hbaa945213d52432c8fdff5d39f861802x.jpg_720x720q50.jpg" alt="Sur Ron" />
-      <h3>Sur Ron</h3>
-      <p>$2,500</p>
-      <button>Add to Cart</button>
+  <main>
+    <h2>Shop eBikes</h2>
+    <div class="products">
+
+      <div class="product-card" data-name="Sur Ron" data-price="2500">
+        <img src="https://cdn.shopify.com/s/files/1/0075/9131/1181/products/2022SurRonLightBeeXElectricDirtBike.png?v=1669338707" alt="Sur Ron" />
+        <h3>Sur Ron</h3>
+        <p>$2,500</p>
+        <button class="add-to-cart" data-name="Sur Ron" data-price="2500">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-name="Talaria" data-price="2000">
+        <img src="https://ebikezilla.com/6115-large_default/talaria-sting-r-mx4-electric-dirt-bike-factory-tl-004-bk-t-talaria.jpg" alt="Talaria" />
+        <h3>Talaria</h3>
+        <p>$2,000</p>
+        <button class="add-to-cart" data-name="Talaria" data-price="2000">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-name="Stark Varg" data-price="14000">
+        <img src="https://e-motousa.com/wp-content/uploads/2025/04/Stark-Varg-Red.jpg" alt="Stark Varg" />
+        <h3>Stark Varg</h3>
+        <p>$14,000</p>
+        <button class="add-to-cart" data-name="Stark Varg" data-price="14000">Add to Cart</button>
+      </div>
+
     </div>
+  </main>
 
-    <!-- Talaria -->
-    <div class="product-card">
-      <img src="https://ebikezilla.com/6115-large_default/talaria-sting-r-mx4-electric-dirt-bike-factory-tl-004-bk-t-talaria.jpg" alt="Talaria" />
-      <h3>Talaria</h3>
-      <p>$4,000</p>
-      <button>Add to Cart</button>
-    </div>
+  <footer>
+    <p>&copy; 2025 eBike Shop</p>
+  </footer>
 
-    <!-- Stark VARG -->
-    <div class="product-card">
-      <img src="https://e-motousa.com/wp-content/uploads/2025/04/Stark-Varg-Red.jpg" alt="Stark VARG" />
-      <h3>Stark VARG</h3>
-      <p>$10,000</p>
-      <button>Add to Cart</button>
-    </div>
-  </div>
-</section>
+  <script>
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        const name = button.getAttribute('data-name');
+        const price = Number(button.getAttribute('data-price'));
 
-    <footer>
-        <p>&copy; 2025 eBike Shop. All rights reserved.</p>
-    </footer>
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push({ name, price });
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        alert(`${name} added to cart!`);
+      });
+    });
+  </script>
 </body>
 </html>
