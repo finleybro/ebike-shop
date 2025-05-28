@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shopping Cart - eBike Shop</title>
+  <link rel="stylesheet" href="the.css" />
+</head>
+<body>
+  <header>
+    <h1>eBike Shop - Cart</h1>
+    <nav>
+      <a href="index.html">Shop</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <p>Total: $<span id="cart-total">0</span></p>
+    <button id="clear-cart">Clear Cart</button>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 eBike Shop</p>
+  </footer>
+
+  <script>
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const clearCartBtn = document.getElementById('clear-cart');
+
+    function renderCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cartItems.innerHTML = '';
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<li>Your cart is empty.</li>';
+      } else {
+        cart.forEach((item, index) => {
+          const li = document.createElement('li');
+          li.textContent = `${item.name} - $${item.price}`;
+
+          const removeBtn = document.createElement('button');
+          removeBtn.textContent = 'Remove';
+          removeBtn.style.marginLeft = '1rem';
+          removeBtn.onclick = () => {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+          };
+
+          li.appendChild(removeBtn);
+          cartItems.appendChild(li);
+          total += item.price;
+        });
+      }
+      cartTotal.textContent = total.toFixed(2);
+    }
+
+    clearCartBtn.addEventListener('click', () => {
+      localStorage.removeItem('cart');
+      renderCart();
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>
