@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Shopping Cart - eBike Shop</title>
-  <link rel="stylesheet" href="the.css" />
+  <title>Shopping Cart</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 1rem; }
+    header nav a { margin-right: 1rem; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 0.5rem; }
+    button { margin-left: 1rem; margin-top: 0.5rem; padding: 0.5rem 1rem; cursor: pointer; }
+    #clear-cart, #checkout { margin-right: 1rem; }
+  </style>
 </head>
 <body>
   <header>
@@ -20,6 +26,7 @@
     <ul id="cart-items"></ul>
     <p>Total: $<span id="cart-total">0</span></p>
     <button id="clear-cart">Clear Cart</button>
+    <button id="checkout">Checkout</button>
   </main>
 
   <footer>
@@ -30,6 +37,7 @@
     const cartItems = document.getElementById('cart-items');
     const cartTotal = document.getElementById('cart-total');
     const clearCartBtn = document.getElementById('clear-cart');
+    const checkoutBtn = document.getElementById('checkout');
 
     function renderCart() {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -45,7 +53,6 @@
 
           const removeBtn = document.createElement('button');
           removeBtn.textContent = 'Remove';
-          removeBtn.style.marginLeft = '1rem';
           removeBtn.onclick = () => {
             cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
@@ -60,10 +67,18 @@
       cartTotal.textContent = total.toFixed(2);
     }
 
-    clearCartBtn.addEventListener('click', () => {
+    clearCartBtn.onclick = () => {
       localStorage.removeItem('cart');
       renderCart();
-    });
+    };
+
+    checkoutBtn.onclick = () => {
+      if (confirm('Proceed to checkout? This will clear your cart.')) {
+        localStorage.removeItem('cart');
+        renderCart();
+        alert('Thank you for your purchase!');
+      }
+    };
 
     renderCart();
   </script>
